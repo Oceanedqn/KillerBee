@@ -1,10 +1,10 @@
 {
-  "name": "KillerBee",
+  "name": "killerbee",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -18,8 +18,12 @@
   },
   "homepage": "https://github.com/Oceanedqn/KillerBee#readme",
   "dependencies": {
+    "body-parser": "^1.19.0",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "nodemon": "^2.0.12"
+    "mysql": "^2.18.1",
+    "mysql2": "^2.3.0",
+    "nodemon": "^2.0.12",
+    "sequelize": "^6.6.5"
   }
 }
