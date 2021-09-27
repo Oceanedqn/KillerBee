@@ -1,34 +1,28 @@
 const router = require('express').Router();
-const stepsController = require('../controllers/steps.controller');
-const { connection } = require("../models/db");
+const { models } = require("../models/db");
+const { getIdParam } = require('../utils/helpers.util')
 
 
-// router.get('/', function (req, res) {
-//     res.send('all steps')
-// })
-
-router.get('/', function (req, res) {
-    // connection.connect();
-
-    // connection.query('select * from step', function (err, query_res) {
-    //     if (err) res.statusCode(500).send(err);
-    //     res.json(query_res)
-    // });
-    // connection.end();
-    console.log(connection);
+router.get('/', async function (req, res) {
+    res.status(200).json(await models.Step.findAll());
 })
 
-// router.get('/view', stepsController.view);
+router.get('/:id', async function (req, res) {
+    const id = getIdParam(req);
+    res.status(200).json(await models.Step.findByPk(id));
+})
 
-// router.put('/modify', function (req, res) {
-//     res.send('modify steps')
-// })
+router.post('/', async function (req, res) {
+    const name = req.body.name
+    if (name != null) {
+        await models.Step.create({
+            STP_name: name,
+        });
+        return res.status(201).end()
+    }
+    return res.status(422).json({ message: 'le champs "name" n est pas spécifié' });
+})
 
-// router.delete('/delete', function (req, res) {
-//     res.send('delete steps')
-// })
-
-// router.post('/create', stepsController.create);
 
 
 module.exports = router;
