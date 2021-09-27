@@ -1,7 +1,7 @@
 const express = require('express');
 require('dotenv').config();
 const app = express();
-const { connection } = require("./models/db")
+require("./models/db");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -26,7 +26,5 @@ const stepsR = require("./routes/steps.routes");
 app.use("/api/steps", stepsR);
 
 
-
-
 // Server
-app.listen(5000, () => console.log(`Server : Started 5000`));
+app.listen(process.env.PORT, () => console.log(`Server : Started ${process.env.PORT}`));

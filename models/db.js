@@ -8,11 +8,9 @@ const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, proces
     dialect: 'mysql'
 });
 
-sequelize.authenticate().then(function () {
-    console.log("db.js : Connected to db");
-}).catch(function (err) {
-    console.log("db.js :  : error" + err);
-});
+sequelize.authenticate()
+    .then(() => console.log("db.js : Connected to db"))
+    .catch((err) => console.log("db.js :  : error" + err));
 
 
 
