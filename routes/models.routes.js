@@ -5,15 +5,11 @@ router.get('/', function (req, res) {
     res.send('all models')
 })
 
-router.get('/view', function (req, res) {
-    res.send('view models')
-})
-
-router.put('/modify', function (req, res) {
+router.put('/', function (req, res) {
     res.send('modify models')
 })
 
-router.delete('/delete', function (req, res) {
+router.delete('/', function (req, res) {
     res.send('delete models')
 })
 
