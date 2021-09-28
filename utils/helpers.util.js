@@ -6,4 +6,8 @@ function getIdParam(req) {
     throw new TypeError(`Invalid ':id' param: "${id}"`);
 }
 
-module.exports = { getIdParam };
+function checkErrorDB(response) {
+    return hasError = response[0][0][''] != undefined
+}
+
+module.exports = { getIdParam, checkErrorDB };
