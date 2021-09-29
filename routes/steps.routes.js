@@ -1,64 +1,40 @@
 const router = require('express').Router();
-const { getIdParam, checkErrorDB } = require('../utils/helpers.util')
-const sequelize = require('../models/db')
-
+const { getIdParam } = require('../utils/helpers.util');
+const queryModel = require('../models/query.models');
 
 
 router.get('/', async function (req, res) {
-    sequelize.query('STP_SHOW').then(function (response) {
-        res.json(response);
-    }).catch(function (err) {
-        res.json(err);
-    });
-
+    await queryModel.queryData('STP_SHOW', '', req, res);
 });
 
 router.get('/:id', async function (req, res) {
-    const id = getIdParam(req);
-    sequelize.query(`STP_SEARCH_ID @id=${id}`).then(function (response) {
-        res.json(response);
-    }).catch(function (err) {
-        res.json(err);
-    });
+    const parameters = {
+        "id": getIdParam(req)
+    }
+    await queryModel.queryData('STP_SEARCH_ID', parameters, req, res);
 });
 
 
 router.post('/', async function (req, res) {
-    const name = req.body.name;
-    if (name == null) {
-        return res.status(422).json({ message: 'le champs "name" n est pas spécifié' });
+    const parameters = {
+        "name": req.body.name
     }
-    sequelize.query(`STP_ADD @name=\'${name}\'`).then(function (response) {
-        if (checkErrorDB(response)) {
-            res.status(409).json({ message: 'This item is already create' })
-        }
-        res.send('Succcessfully cretaed');
-        res.status(201).json(response);
 
+    queryModel.queryData('STP_ADD', parameters, req, res);
 
-    }).catch(function (err) {
-        res.status(500).json(err);
-    });
 });
 
 router.put('/:id', async function (req, res) {
-    const name = req.body.name;
-    const id = getIdParam(req);
-    sequelize.query(`STP_CHANGE @id=${id},  @name=\'${name}\'`).then(function (response) {
-        res.send('Successfully changed');
-        res.status(200).json(response);
-    }).catch(function (err) {
-        res.json(err);
-    });
+    const parameters = {
+        "id": getIdParam(req),
+        "name": req.body.name
+    }
+    queryModel.queryData('STP_CHANGE', parameters, req, res);
 });
 
 router.delete('/:id', async function (req, res) {
-    const id = getIdParam(req);
-    sequelize.query(`STP_DELETE @id=${id}`).then(function (response) {
-        res.send("Successfully deleted");
-    }).catch(function (err) {
-        res.json(err);
-    });
+    const parameters = { "id": getIdParam(req) }
+    queryModel.queryData('STP_DELETE', parameters, req, res);
 });
 
 
