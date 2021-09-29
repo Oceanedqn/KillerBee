@@ -29,8 +29,13 @@ router.post('/', async function (req, res) {
         return res.status(422).json({ message: 'le champs "name" n est pas spécifié' });
     }
     sequelize.query(`STP_ADD @name=\'${name}\'`).then(function (response) {
-        if (checkErrorDB(response)) return res.status(500).json({ message: 'This item is already create' })
-        res.status(201).json({ message: 'Succcessfully cretaed' })
+        if (checkErrorDB(response)) {
+            res.status(409).json({ message: 'This item is already create' })
+        }
+        res.send('Succcessfully cretaed');
+        res.status(201).json(response);
+
+
     }).catch(function (err) {
         res.status(500).json(err);
     });
@@ -39,7 +44,8 @@ router.post('/', async function (req, res) {
 router.put('/:id', async function (req, res) {
     const name = req.body.name;
     const id = getIdParam(req);
-    sequelize.query(`STP_CHANGE @id=${id}  @name=\'${name}\'`).then(function (response) {
+    sequelize.query(`STP_CHANGE @id=${id},  @name=\'${name}\'`).then(function (response) {
+        res.send('Successfully changed');
         res.status(200).json(response);
     }).catch(function (err) {
         res.json(err);
@@ -49,7 +55,7 @@ router.put('/:id', async function (req, res) {
 router.delete('/:id', async function (req, res) {
     const id = getIdParam(req);
     sequelize.query(`STP_DELETE @id=${id}`).then(function (response) {
-        res.send("deleted");
+        res.send("Successfully deleted");
     }).catch(function (err) {
         res.json(err);
     });

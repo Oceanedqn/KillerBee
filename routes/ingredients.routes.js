@@ -41,7 +41,8 @@ router.put('/:id', async function (req, res) {
     const name = req.body.name;
     const description = req.body.description;
     const id = getIdParam(req);
-    sequelize.query(`IGD_CHANGE @id=${id}  @name=\'${name}\', @description=\'${description}\'`).then(function (response) {
+    sequelize.query(`IGD_CHANGE @id=${id},  @name=\'${name}\', @description=\'${description}\'`).then(function (response) {
+        res.send('Successfully changed');
         res.status(200).json(response);
     }).catch(function (err) {
         res.json(err);
@@ -51,7 +52,7 @@ router.put('/:id', async function (req, res) {
 router.delete('/:id', async function (req, res) {
     const id = getIdParam(req);
     sequelize.query(`IGD_DELETE @id=${id}`).then(function (response) {
-        res.send("deleted");
+        res.send("Successfully deleted");
     }).catch(function (err) {
         res.json(err);
     });
