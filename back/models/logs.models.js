@@ -1,6 +1,7 @@
 
 const sequelize = require('../models/db')
 
+//Show Logs from DB (not working)
 async function showLogs(req, res) {
     sequelize.query('IGD_SHOW').then(function (response) {
         res.json(response);
@@ -9,6 +10,7 @@ async function showLogs(req, res) {
     });
 }
 
+//Insert Logs into DB (not working)
 async function putLogs(req, res) {
     const message = req.body.message;
     const status = req.body.status;

@@ -8,15 +8,6 @@ router.get('/', async function (req, res) {
     queryModel.queryData('MDL_SHOW', '', req, res);
 });
 
-// Show model by id
-router.get('/:id', async function (req, res) {
-    const parameters = {
-        "id": getIdParam(req)
-    }
-    queryModel.queryData('MDL_SEARCH_ID', parameters, req, res);
-});
-
-
 // Create model
 router.post('/', async function (req, res) {
     const parameters = {
@@ -42,13 +33,13 @@ router.put('/:id', async function (req, res) {
     queryModel.queryData('MDL_CHANGE', parameters, req, res);
 });
 
-// Delete process by id
+// Delete modell by id
 router.delete('/:id', async function (req, res) {
     const parameters = { "id": getIdParam(req) }
     queryModel.queryData('MDL_DELETE', parameters, req, res);
 });
 
-// IF PROCESS IS ALREADY CREATED
+// IF MODEL IS ALREADY CREATED
 // Change currently model to add ingredients with prices
 router.put('/:id/add_ingredient', async function (req, res) {
     const parameters = {
@@ -61,7 +52,7 @@ router.put('/:id/add_ingredient', async function (req, res) {
 
 })
 
-// Change currently process to change currently test
+// Change currently model to change currently test
 router.put('/:id/change_weight', async function (req, res) {
     const parameters = {
         "id_igd": req.body.id_igd,
@@ -71,8 +62,8 @@ router.put('/:id/change_weight', async function (req, res) {
     queryModel.queryData('IGD_USE_CHANGE', parameters, req, res);
 })
 
-// Change currently process to delete 
-// Delete process by id
+// Change currently model to delete 
+// Delete model by id
 router.delete('/:id/delete_ingredient', async function (req, res) {
     const parameters = {
         "id_mdl": req.body.id_mdl,
