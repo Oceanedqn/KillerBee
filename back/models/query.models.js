@@ -1,4 +1,4 @@
-const sequelize = require('../models/db');
+const { sequelize } = require('../models/db');
 const { checkErrorDB, setupParams } = require('../utils/helpers.util');
 
 

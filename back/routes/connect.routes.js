@@ -5,16 +5,13 @@ const jwt = require('jsonwebtoken')
 
 // Create ingredient
 router.post('/', async function (req, res) {
-    // const config = {
-    //     "name": req.body.name,
-    //     "password": req.body.password
-    // }
     const config = {
-        "name": "product",
-        "password": "Bdd2021Prod@"
+        "name": req.body.name,
+        "password": req.body.password
     }
 
-    jwt.sign({ user: config }, "secretary", (err, token) => {
+
+    jwt.sign({ user: config }, "product", (err, token) => {
         res.json({
             token,
         });
@@ -22,46 +19,28 @@ router.post('/', async function (req, res) {
     await connectToDB(config);
 });
 
-// router.post('/posts', verifyToken, (req, res) => {
-//     jwt0verify(req.token, 'connect', (err, authData) => {
-//         if (err) {
-//             res.sendStatus(403)//forbiden
-//         } else {
-//             res.json({
-//                 message: "Posts ok",
-//                 authData
-//             })
-//         }
-//     })
-
-// })
-
 router.post('/posts', verifyToken, (req, res) => {
-    jwt.verify(req.token, "secretary", (err, authData) => {
+    jwt.verify(req.token, "product", (err, authData) => {
         if (err) {
             res.sendStatus(403);
         } else {
             res.json({
                 message: "post created",
                 authData
+
             });
 
         }
     })
 
-
-    res.json({
-        message: "Posts ok"
-    })
-
 })
 
 function verifyToken(req, res, next) {
-    const bearerHeader = req.headers['authorization']
+    const bearerHeader = req.headers['authorization'];
     if (typeof bearerHeader !== 'undefined') {
-        const bearerToken = bearerToken.split(' ')[1]
+        const bearerToken = bearerHeader.split(' ')[1]
         req.token = bearerToken
-        next()
+        next();
     } else {
         res.sendStatus(403) //forbidden
     }
