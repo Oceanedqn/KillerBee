@@ -27,6 +27,9 @@ app.use('/api/process', processR);
 const stepsR = require("./routes/steps.routes");
 app.use("/api/steps", stepsR);
 
+const connectR = require("./routes/connect.routes");
+app.use("/api/connect", connectR);
+
 
 // Server
 app.listen(process.env.PORT, () => console.log(`Server : Started ${process.env.PORT}`));
